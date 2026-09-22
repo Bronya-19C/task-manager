@@ -16,6 +16,13 @@
               :class="view === 'kanban' ? 'bg-white dark:bg-gray-600 shadow' : 'text-gray-500'"
             >📊 看板</button>
           </div>
+          <button
+            @click="toggleDark"
+            class="px-2 py-1 text-lg rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            title="切换深色模式"
+          >
+            {{ isDark ? '☀️' : '🌙' }}
+          </button>
           <span class="text-sm text-gray-500 dark:text-gray-400">
             共 {{ tasks.length }} 个任务
           </span>
@@ -66,9 +73,11 @@ import TaskForm from './components/TaskForm.vue'
 import TaskList from './components/TaskList.vue'
 import KanbanBoard from './components/KanbanBoard.vue'
 import { useTaskManager } from './composables/useTaskManager'
+import { useDarkMode } from './composables/useDarkMode'
 import type { Priority, Status } from './types/task'
 
 const { tasks, add, update, remove, getByStatus } = useTaskManager()
+const { isDark, toggle: toggleDark } = useDarkMode()
 const formRef = ref<InstanceType<typeof TaskForm> | null>(null)
 const view = ref<'list' | 'kanban'>('list')
 const showForm = ref(false)
